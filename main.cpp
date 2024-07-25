@@ -126,19 +126,38 @@ public:
         }
         return false;
     }
+
+    void displayList() {
+        node* current = head;
+        while (current != nullptr) {
+            cout << "Username: " << current->person.username << endl;
+            cout << "Full Name: " << current->person.fullname << endl;
+            cout << "Date of Birth: " << current->person.dateofbirth << endl;
+            cout << "Address: " << current->person.address << endl;
+            cout << "Civil Status: " << current->person.civilStatus << endl;
+            cout << "Father's Name: " << current->person.fatherFullname << endl;
+            cout << "Mother's Maiden Name: " << current->person.motherFullname << endl;
+            cout << "Income: " << current->person.income << endl;
+            cout << "-----------------------------" << endl;
+            current = current->next;
+        }
+    }
 };
 
 int main() {
     linked_list list;
 
+    // Load the person data once at the beginning
     list.loadperson(global_filename);
+    
     int command;
 
     while (true) {
         cout << "Civil Registrar System" << endl;
         cout << "1. Login" << endl;
         cout << "2. Register" << endl;
-        cout << "3. Exit" << endl;
+        cout << "3. Display All Persons" << endl;
+        cout << "4. Exit" << endl;
         cout << "Enter: ";
         cin >> command;
         cin.ignore(); // Ignore newline left in buffer after cin
@@ -159,8 +178,13 @@ int main() {
             }
             case 2:
                 list.registerPerson(global_filename);
+                // Reload the person data after registration
+                list.loadperson(global_filename);
                 break;
             case 3:
+                list.displayList();
+                break;
+            case 4:
                 cout << "Exiting..." << endl;
                 return 0;
             default:
