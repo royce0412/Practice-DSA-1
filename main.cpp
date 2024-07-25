@@ -5,7 +5,6 @@
 #include <cstdlib>
 using namespace std;
 
-// Ensure the global filename is defined
 string global_filename = "details.txt";
 
 struct Person {
@@ -19,7 +18,7 @@ struct Person {
     string civilStatus;
     string fatherFullname;
     string motherFullname;
-    int income; // in PHP (Philippine Peso)
+    int income; // pesos
 };
 
 struct node {
@@ -37,15 +36,16 @@ public:
     }
 
     ~linked_list() {
-        clearList(); // Ensure the list is cleaned up when the linked_list object is destroyed
-    }
+        clearList(); 
+    } // destructor tawag sa ~ syntax na to dinedelete niya lahat ng node after matapos magrun yung code
 
     bool isUsernameTaken(const string& username) {
         ifstream readfile(global_filename);
         if (!readfile) {
             cerr << "Failed to open file." << endl;
             return false;
-        }
+        } /*const string& ang ginamit para kunin yung address ng data instead ung value since
+        minsan nagkakapareho sila ng value pero ung address hindi*/
 
         string line;
         while (getline(readfile, line)) {
@@ -56,7 +56,9 @@ public:
             if (existingUsername == username) {
                 return true;
             }
-        }
+        }/*it reads the whole line as a string tas ginamit ung stringstream para hati-hatiin
+        ung string na yun into smaller strings, ung symbol na | ayun ung boundary kung saan
+        hahatiin*/
 
         return false;
     }
@@ -75,7 +77,7 @@ public:
         cout << "Username: ";
         getline(cin, newPerson.username);
 
-        // Check if the username is already taken
+
         if (isUsernameTaken(newPerson.username)) {
             cout << "Username already taken. Please choose a different username." << endl;
             return;
@@ -106,20 +108,20 @@ public:
         cout << "Select an option (1/2/3): ";
         int incomeOption;
         cin >> incomeOption;
-        cin.ignore(); // Ignore newline left in buffer after cin
+        cin.ignore(); 
 
         switch (incomeOption) {
             case 1:
-                newPerson.income = 10000; // Below PHP 10,000
+                newPerson.income = 10000; 
                 break;
             case 2:
-                newPerson.income = 15000; // PHP 10,000 - PHP 20,000 (average)
+                newPerson.income = 15000; 
                 break;
             case 3:
-                newPerson.income = 25000; // Above PHP 20,000
+                newPerson.income = 25000; 
                 break;
             default:
-                newPerson.income = 0; // Default to 0 if invalid option
+                newPerson.income = 0;
                 break;
         }
 
@@ -144,7 +146,7 @@ public:
             return;
         }
 
-        clearList(); // Clear the current list before loading new data
+        clearList(); 
 
         string line;
         while (getline(readfile, line)) {
@@ -194,7 +196,7 @@ public:
         return false;
     }
 
-    bool adminLogin(const string& user, const string& pass) {
+    bool adminLogin(string user, string pass) {
         return user == "admin" && pass == "adminpass";
     }
 
@@ -302,13 +304,13 @@ public:
                     int incomeOption = stoi(incomeOptionStr);
                     switch (incomeOption) {
                         case 1:
-                            current->person.income = 10000; // Below PHP 10,000
+                            current->person.income = 10000; 
                             break;
                         case 2:
-                            current->person.income = 15000; // PHP 10,000 - PHP 20,000 (average)
+                            current->person.income = 15000;
                             break;
                         case 3:
-                            current->person.income = 25000; // Above PHP 20,000
+                            current->person.income = 25000; 
                             break;
                         default:
                             cout << "Invalid option. Keeping current income." << endl;
@@ -360,7 +362,7 @@ int main() {
 
     while (true) {
         if (!loggedIn && !adminLoggedIn) {
-            system("clear"); // Clear the screen for Unix-like systems
+            system("clear");
             cout << "Civil Registrar System" << endl;
             cout << "1. User Login" << endl;
             cout << "2. Admin Login" << endl;
@@ -368,7 +370,7 @@ int main() {
             cout << "4. Exit" << endl;
             cout << "Enter: ";
             cin >> command;
-            cin.ignore(); // Ignore newline left in buffer after cin
+            cin.ignore(); 
             system("clear");
             switch (command) {
                 case 1: {
@@ -412,15 +414,15 @@ int main() {
             }
 
             cout << "Press Enter to continue...";
-            cin.get(); // Wait for user input
+            cin.get(); 
         } else if (adminLoggedIn) {
-            system("clear"); // Clear the screen for Unix-like systems
+            system("clear"); 
             cout << "Civil Registrar System - Admin" << endl;
             cout << "1. Display All Data" << endl;
             cout << "2. Exit" << endl;
             cout << "Enter: ";
             cin >> command;
-            cin.ignore(); // Ignore newline left in buffer after cin
+            cin.ignore(); 
             system("clear");
             switch (command) {
                 case 1:
@@ -435,16 +437,16 @@ int main() {
             }
 
             cout << "Press Enter to continue...";
-            cin.get(); // Wait for user input
+            cin.get(); 
         } else if (loggedIn) {
-            system("clear"); // Clear the screen for Unix-like systems
+            system("clear"); 
             cout << "Civil Registrar System - User" << endl;
             cout << "1. Display Personal Information" << endl;
             cout << "2. Edit Person Details" << endl;
             cout << "3. Logout" << endl;
             cout << "Enter: ";
             cin >> command;
-            cin.ignore(); // Ignore newline left in buffer after cin
+            cin.ignore(); 
             system("clear");
             switch (command) {
                 case 1:
@@ -463,7 +465,7 @@ int main() {
             }
 
             cout << "Press Enter to continue...";
-            cin.get(); // Wait for user input
+            cin.get();
         }
     }
 
